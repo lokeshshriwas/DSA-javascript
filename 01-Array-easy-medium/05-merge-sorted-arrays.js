@@ -75,4 +75,7 @@ function mergeSortedArr(nums1, m, nums2, n){
             p2--;
         }
     }
+    return nums1;
 }
+
+console.log(mergeSortedArr([1,3,4], 3, [4,5,8], 3 ))
