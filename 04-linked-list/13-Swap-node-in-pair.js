@@ -45,11 +45,10 @@
  * @return {ListNode}
  */
 
-
- function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
- }
+function ListNode(val, next) {
+  this.val = val === undefined ? 0 : val;
+  this.next = next === undefined ? null : next;
+}
 
 /////////////////////  Recursive approach \\\\\\\\\\\\\\\\\\\\\\\
 var swapPairs = function (head) {
@@ -66,23 +65,23 @@ var swapPairs = function (head) {
 ///////////////////// Iterative approach \\\\\\\\\\\\\\\\\\\\\\\\\\
 
 var swapPairs = function (head) {
-    if(!head || !head.next) return head;
-    
-    let sentinal = new ListNode();
-    sentinal.next = head;
-    let p = sentinal;
-    let c = p.next;
-    let n = c.next;
+  if (!head || !head.next) return head;
 
-    while(c && n){
-        p.next = n;
-        c.next =  n.next;
-        n.next = c;
+  let sentinal = new ListNode();
+  sentinal.next = head;
+  let p = sentinal;
+  let c = p.next;
+  let n = c.next;
 
-        p = c;
-        c = p.next;
-        n = c && c.next
-    }
+  while (c && n) {
+    p.next = n;
+    c.next = n.next;
+    n.next = c;
 
-    return sentinal.next;
+    p = c;
+    c = p.next;
+    n = c && c.next;
+  }
+
+  return sentinal.next;
 };
