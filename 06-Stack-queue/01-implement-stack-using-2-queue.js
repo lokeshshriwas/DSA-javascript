@@ -1,0 +1,171 @@
+// Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (push, top, pop, and empty).
+
+// Implement the MyStack class:
+
+// void push(int x) Pushes element x to the top of the stack.
+// int pop() Removes the element on the top of the stack and returns it.
+// int top() Returns the element on the top of the stack.
+// boolean empty() Returns true if the stack is empty, false otherwise.
+// Notes:
+
+// You must use only standard operations of a queue, which means that only push to back, peek/pop from front, size and is empty operations are valid.
+// Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.
+
+// Example 1:
+
+// Input
+// ["MyStack", "push", "push", "top", "pop", "empty"]
+// [[], [1], [2], [], [], []]
+// Output
+// [null, null, null, 2, 2, false]
+
+// Explanation
+// MyStack myStack = new MyStack();
+// myStack.push(1);
+// myStack.push(2);
+// myStack.top(); // return 2
+// myStack.pop(); // return 2
+// myStack.empty(); // return False
+
+// Constraints:
+
+// 1 <= x <= 9
+// At most 100 calls will be made to push, pop, top, and empty.
+// All the calls to pop and top are valid.
+
+// Follow-up: Can you implement the stack using only one queue?
+
+
+/////////////////////////////// Using 2 queue approach \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+var MyStack = function() {
+    this.q1 = [];
+    this.q2 = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function(x) {
+    // push is similar for both stack and queue
+    this.q1.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    let n = this.q1.length
+    for(let i = 0; i<n-1; i++){
+        let firstElem = this.q1.shift();
+        this.q2.push(firstElem);
+    }
+    // remove from q1 and save in a variable
+    let ans = this.q1.shift();
+
+    // swapping queues
+    let temp = this.q1;
+    this.q1 = this.q2;
+    this.q2 = temp;
+
+    return ans;
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    let  n = this.q1.length;
+    for(let i =0; i<n-1; i++){
+        let firstElem = this.q1.shift();
+        this.q2.push(firstElem);
+    }
+    // Save the ans need to return 
+    let ans = this.q1.shift();
+    this.q2.push(ans);
+
+    // swapping queues
+    let temp = this.q1;
+    this.q1 = this.q2;
+    this.q2 = temp;
+
+    return ans
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    return this.q1.length === 0; 
+};
+
+/** 
+ * Your MyStack object will be instantiated and called as such:
+ * var obj = new MyStack()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.empty()
+ */
+
+///////////////////////////// Using 1 queue approach \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+var MyStack = function() {
+    this.q = [];
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function(x) {
+    // push is similar for both stack and queue
+    this.q.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    let n = this.q.length
+    for(let i = 0; i<n-1; i++){
+        let firstElem = this.q.shift();
+        this.q.push(firstElem);
+    }
+    // remove from q and save in a variable
+    let ans = this.q.shift();
+    return ans;
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    let  n = this.q.length;
+    for(let i =0; i<n-1; i++){
+        let firstElem = this.q.shift();
+        this.q.push(firstElem);
+    }
+    // Save the ans need to return 
+    let ans = this.q.shift();
+    this.q.push(ans);
+    return ans
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    return this.q.length === 0; 
+};
+
+/** 
+ * Your MyStack object will be instantiated and called as such:
+ * var obj = new MyStack()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.empty()
+ */ 
